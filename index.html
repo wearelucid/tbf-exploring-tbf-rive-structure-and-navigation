@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rive Structure</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        #canvas {
+            cursor: move;
+            touch-action: none;
+            border: 2px solid #333;
+            border-radius: 10px;
+            width: 600px;
+            height: 80vh;
+            max-height: 1200px;
+        }
+
+        .dev-panel {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            min-width: 250px;
+        }
+
+        .dev-panel h3 {
+            margin: 0 0 15px 0;
+            font-size: 16px;
+            color: #333;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 8px;
+        }
+
+        .dev-panel button {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 2px solid #333;
+            background: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .dev-panel button:hover {
+            background: #f0f0f0;
+        }
+
+        .dev-panel button.active {
+            background: #333;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+
+    <div class="dev-panel">
+        <h3>Toggle Districts</h3>
+        <button id="toggleDistrict01">Bahnhof</button>
+        <button id="toggleDistrict02">Stadtpark</button>
+        <button id="toggleDistrict03">Mysterium</button>
+        <p>Check console for triggers</p>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+    <script src="https://unpkg.com/@rive-app/canvas"></script>
+    <script>
+        const canvas = document.getElementById('canvas');
+
+        // Set canvas resolution to match device pixel ratio for sharp rendering
+        const dpr = window.devicePixelRatio || 1;
+        const displayWidth = 600;
+        const displayHeight = Math.min(window.innerHeight * 0.8, 1200);
+
+        canvas.width = displayWidth * dpr;
+        canvas.height = displayHeight * dpr;
+
+        const hammer = new Hammer(canvas);
+
+        // Rive position properties
+        let cameraXProp = null;
+        let cameraYProp = null;
+
+        // Pan tracking variables
+        let startX = 0;
+        let startY = 0;
+        let scaleX = 1;
+        let scaleY = 1;
+
+        hammer.on('panstart', (ev) => {
+            if (cameraXProp && cameraYProp) {
+                startX = cameraXProp.value;
+                startY = cameraYProp.value;
+            }
+        });
+
+        hammer.on('pan', (ev) => {
+            if (cameraXProp && cameraYProp) {
+                cameraXProp.value = startX + (ev.deltaX * dpr * scaleX);
+                cameraYProp.value = startY + (ev.deltaY * dpr * scaleY);
+            }
+        });
+
+        // Initialize Rive
+        const r = new rive.Rive({
+            src: "prototype.riv",
+            canvas: canvas,
+            autoplay: true,
+            autoBind: true,
+            stateMachines: "State Machine 1",
+            onLoad: () => {
+                r.resizeDrawingSurfaceToCanvas();
+
+                // Calculate scale factors for 1:1 pan responsiveness
+                const bounds = r.bounds;
+                scaleX = bounds.maxX / canvas.width;
+
+                // Account for aspect ratio when Rive fits by width
+                const artboardAspect = bounds.maxX / bounds.maxY;
+                const renderedHeight = canvas.width / artboardAspect;
+                scaleY = bounds.maxY / renderedHeight;
+
+                const mainVMI = r.viewModelInstance;
+
+                // Setup camera movement
+                const cameraMovementVM = mainVMI.viewModel("cameraMovement");
+                cameraXProp = cameraMovementVM.number("cameraX");
+                cameraYProp = cameraMovementVM.number("cameraY");
+                const zoomProp = cameraMovementVM.number("zoom");
+                zoomProp.value = 300.0;
+
+                // Setup map
+                const mapVM = mainVMI.viewModel("map");
+
+                // Log all properties to discover structure
+                console.log("=== Map View Model Properties ===");
+                console.log(mapVM.properties);
+
+                // Setup district containers
+                const districts = [
+                    { id: '01', name: 'Bahnhof', artboard: 'Bahnhof' },
+                    { id: '02', name: 'Stadtpark', artboard: 'Stadtpark' },
+                    { id: '03', name: 'Mysterium', artboard: 'Mysterium' }
+                ];
+
+                districts.forEach(district => {
+                    const artboardProp = mapVM.artboard(`districtContainers/districtContainer${district.id}/district`);
+                    const visibleProp = mapVM.boolean(`districtContainers/districtContainer${district.id}/visible`);
+
+                    artboardProp.value = r.getArtboard(district.artboard);
+                    visibleProp.value = district.id === '01'; // Only first district visible by default
+
+                    const btn = document.getElementById(`toggleDistrict${district.id}`);
+                    if (visibleProp.value) btn.classList.add('active');
+
+                    btn.addEventListener('click', () => {
+                        visibleProp.value = !visibleProp.value;
+                        btn.classList.toggle('active', visibleProp.value);
+                    });
+                });
+
+                // District click triggers
+                mapVM.trigger('districts/districtBahnhof/clicked').on(() => {
+                    console.log("District Bahnhof clicked");
+                });
+                mapVM.trigger('districts/districtStadtpark/clicked').on(() => {
+                    console.log("District Stadtpark clicked");
+                });
+                mapVM.trigger('districts/districtMysterium/clicked').on(() => {
+                    console.log("District Mysterium clicked");
+                });
+
+                // Scene click triggers
+                mapVM.trigger('districts/districtBahnhof/sceneBhfPlatz/clicked').on(() => {
+                    console.log("Scene Bhf Platz clicked");
+                });
+                mapVM.trigger('districts/districtBahnhof/sceneCafe/clicked').on(() => {
+                    console.log("Scene Cafe clicked");
+                });
+            },
+        });
+    </script>
+</body>
+
+</html>
