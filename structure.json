@@ -1,0 +1,505 @@
+{
+      "Main": {
+            "type": "viewModel",
+            "properties": {
+                  "map": {
+                        "type": "viewModel",
+                        "reference": "Map"
+                  },
+                  "cameraMovement": {
+                        "type": "viewModel",
+                        "reference": "CameraMovement"
+                  }
+            }
+      },
+      "CameraMovement": {
+            "type": "viewModel",
+            "properties": {
+                  "zoom": {
+                        "type": "number",
+                        "default": 31.0
+                  },
+                  "cameraX": {
+                        "type": "number",
+                        "default": 180.0
+                  },
+                  "cameraY": {
+                        "type": "number",
+                        "default": 0.0
+                  }
+            }
+      },
+      "Map": {
+            "type": "viewModel",
+            "properties": {
+                  "districts": {
+                        "type": "viewModel",
+                        "reference": "Districts"
+                  },
+                  "districtContainers": {
+                        "type": "viewModel",
+                        "reference": "DistrictContainers"
+                  }
+            }
+      },
+      "Districts": {
+            "type": "viewModel",
+            "properties": {
+                  "districtBahnhof": {
+                        "type": "viewModel",
+                        "reference": "DistrictBahnhof"
+                  },
+                  "districtStadtpark": {
+                        "type": "viewModel",
+                        "reference": "DistrictStadtpark"
+                  },
+                  "districtMysterium": {
+                        "type": "viewModel",
+                        "reference": "DistrictMysterium"
+                  },
+                  "districtKVA": {
+                        "type": "viewModel",
+                        "reference": "DistrictKVA"
+                  },
+                  "districtAgglomeration": {
+                        "type": "viewModel",
+                        "reference": "DistrictAgglomeration"
+                  },
+                  "districtUmland": {
+                        "type": "viewModel",
+                        "reference": "DistrictUmland"
+                  },
+                  "districtFluss": {
+                        "type": "viewModel",
+                        "reference": "DistrictFluss"
+                  },
+                  "districtIndustrie": {
+                        "type": "viewModel",
+                        "reference": "DistrictIndustrie"
+                  },
+                  "districtVorstadt": {
+                        "type": "viewModel",
+                        "reference": "DistrictVorstadt"
+                  },
+                  "districtInnenstadt": {
+                        "type": "viewModel",
+                        "reference": "DistrictInnenstadt"
+                  },
+                  "districtHochhausquartier": {
+                        "type": "viewModel",
+                        "reference": "DistrictHochhausquartier"
+                  },
+                  "districtFlughafen": {
+                        "type": "viewModel",
+                        "reference": "DistrictFlughafen"
+                  },
+                  "districtFinanzdistrikt": {
+                        "type": "viewModel",
+                        "reference": "DistrictFinanzdistrikt"
+                  },
+                  "districtEntwicklungsgebiet": {
+                        "type": "viewModel",
+                        "reference": "DistrictEntwicklungsgebiet"
+                  }
+            }
+      },
+      "DistrictContainers": {
+            "type": "viewModel",
+            "properties": {
+                  "districtContainer01": {
+                        "type": "viewModel",
+                        "reference": "DistrictContainer"
+                  },
+                  "districtContainer02": {
+                        "type": "viewModel",
+                        "reference": "DistrictContainer"
+                  },
+                  "districtContainer03": {
+                        "type": "viewModel",
+                        "reference": "DistrictContainer"
+                  },
+                  "districtContainer04": {
+                        "type": "viewModel",
+                        "reference": "DistrictContainer"
+                  },
+                  "districtContainer05": {
+                        "type": "viewModel",
+                        "reference": "DistrictContainer"
+                  },
+                  "districtContainer06": {
+                        "type": "viewModel",
+                        "reference": "DistrictContainer"
+                  },
+                  "districtContainer07": {
+                        "type": "viewModel",
+                        "reference": "DistrictContainer"
+                  },
+                  "districtContainer08": {
+                        "type": "viewModel",
+                        "reference": "DistrictContainer"
+                  },
+                  "districtContainer09": {
+                        "type": "viewModel",
+                        "reference": "DistrictContainer"
+                  },
+                  "districtContainer10": {
+                        "type": "viewModel",
+                        "reference": "DistrictContainer"
+                  },
+                  "districtContainer11": {
+                        "type": "viewModel",
+                        "reference": "DistrictContainer"
+                  },
+                  "districtContainer12": {
+                        "type": "viewModel",
+                        "reference": "DistrictContainer"
+                  },
+                  "districtContainer13": {
+                        "type": "viewModel",
+                        "reference": "DistrictContainer"
+                  },
+                  "districtContainer14": {
+                        "type": "viewModel",
+                        "reference": "DistrictContainer"
+                  }
+            }
+      },
+      "DistrictContainer": {
+            "type": "viewModel",
+            "properties": {
+                  "visible": {
+                        "type": "boolean",
+                        "default": true
+                  },
+                  "district": {
+                        "type": "any"
+                  }
+            }
+      },
+      "InteractionIndicator": {
+            "type": "viewModel",
+            "properties": {
+                  "clicked": {
+                        "type": "trigger"
+                  },
+                  "hovered": {
+                        "type": "boolean",
+                        "default": false
+                  }
+            },
+            "instances": [
+                  "bahnhofScene01inst",
+                  "bahnhofScene02inst",
+                  "bahnhofScene03inst",
+                  "bahnhofScene04inst",
+                  "stadtparkScene01inst",
+                  "stadtparkScene02inst",
+                  "stadtparkScene03inst",
+                  "mysteriumScene01inst",
+                  "mysteriumScene02inst",
+                  "mysteriumScene03inst",
+                  "kvaScene01inst",
+                  "kvaScene02inst",
+                  "kvaScene03inst",
+                  "kvaScene04inst",
+                  "agglomerationScene01inst",
+                  "agglomerationScene02inst",
+                  "agglomerationScene03inst",
+                  "umlandScene01inst",
+                  "umlandScene02inst",
+                  "umlandScene03inst",
+                  "flussScene01inst",
+                  "flussScene02inst",
+                  "flussScene03inst",
+                  "industrieScene01inst",
+                  "vorstadtScene01inst",
+                  "vorstadtScene02inst",
+                  "vorstadtScene03inst",
+                  "innenstadtScene01inst",
+                  "innenstadtScene02inst",
+                  "innenstadtScene03inst",
+                  "hochhausquartierScene01inst",
+                  "hochhausquartierScene02inst",
+                  "hochhausquartierScene03inst",
+                  "flughafenScene01inst",
+                  "flughafenScene02inst",
+                  "flughafenScene03inst",
+                  "finanzdistrictScene01inst",
+                  "finanzdistrictScene02inst",
+                  "entwicklungsgebietScene01inst",
+                  "entwicklungsgebietScene02inst"
+            ]
+      },
+      "DistrictBahnhof": {
+            "type": "viewModel",
+            "properties": {
+                  "clicked": {
+                        "type": "trigger"
+                  },
+                  "bahnhofScene01": {
+                        "type": "viewModel",
+                        "reference": "InteractionIndicator"
+                  },
+                  "bahnhofScene02": {
+                        "type": "viewModel",
+                        "reference": "InteractionIndicator"
+                  },
+                  "bahnhofScene03": {
+                        "type": "viewModel",
+                        "reference": "InteractionIndicator"
+                  },
+                  "bahnhofScene04": {
+                        "type": "viewModel",
+                        "reference": "InteractionIndicator"
+                  }
+            }
+      },
+      "DistrictStadtpark": {
+            "type": "viewModel",
+            "properties": {
+                  "clicked": {
+                        "type": "trigger"
+                  },
+                  "stadtparkScene01": {
+                        "type": "viewModel",
+                        "reference": "InteractionIndicator"
+                  },
+                  "stadtparkScene02": {
+                        "type": "viewModel",
+                        "reference": "InteractionIndicator"
+                  },
+                  "stadtparkScene03": {
+                        "type": "viewModel",
+                        "reference": "InteractionIndicator"
+                  }
+            }
+      },
+      "DistrictMysterium": {
+            "type": "viewModel",
+            "properties": {
+                  "clicked": {
+                        "type": "trigger"
+                  },
+                  "mysteriumScene01": {
+                        "type": "viewModel",
+                        "reference": "InteractionIndicator"
+                  },
+                  "mysteriumScene02": {
+                        "type": "viewModel",
+                        "reference": "InteractionIndicator"
+                  },
+                  "mysteriumScene03": {
+                        "type": "viewModel",
+                        "reference": "InteractionIndicator"
+                  }
+            }
+      },
+      "DistrictKVA": {
+            "type": "viewModel",
+            "properties": {
+                  "clicked": {
+                        "type": "trigger"
+                  },
+                  "kvaScene01": {
+                        "type": "viewModel",
+                        "reference": "InteractionIndicator"
+                  },
+                  "kvaScene02": {
+                        "type": "viewModel",
+                        "reference": "InteractionIndicator"
+                  },
+                  "kvaScene03": {
+                        "type": "viewModel",
+                        "reference": "InteractionIndicator"
+                  },
+                  "kvaScene04": {
+                        "type": "viewModel",
+                        "reference": "InteractionIndicator"
+                  }
+            }
+      },
+      "DistrictAgglomeration": {
+            "type": "viewModel",
+            "properties": {
+                  "clicked": {
+                        "type": "trigger"
+                  },
+                  "agglomerationScene01": {
+                        "type": "viewModel",
+                        "reference": "InteractionIndicator"
+                  },
+                  "agglomerationScene02": {
+                        "type": "viewModel",
+                        "reference": "InteractionIndicator"
+                  },
+                  "agglomerationScene03": {
+                        "type": "viewModel",
+                        "reference": "InteractionIndicator"
+                  }
+            }
+      },
+      "DistrictUmland": {
+            "type": "viewModel",
+            "properties": {
+                  "clicked": {
+                        "type": "trigger"
+                  },
+                  "umlandScene01": {
+                        "type": "viewModel",
+                        "reference": "InteractionIndicator"
+                  },
+                  "umlandScene02": {
+                        "type": "viewModel",
+                        "reference": "InteractionIndicator"
+                  },
+                  "umlandScene03": {
+                        "type": "viewModel",
+                        "reference": "InteractionIndicator"
+                  }
+            }
+      },
+      "DistrictFluss": {
+            "type": "viewModel",
+            "properties": {
+                  "clicked": {
+                        "type": "trigger"
+                  },
+                  "flussScene01": {
+                        "type": "viewModel",
+                        "reference": "InteractionIndicator"
+                  },
+                  "flussScene02": {
+                        "type": "viewModel",
+                        "reference": "InteractionIndicator"
+                  },
+                  "flussScene03": {
+                        "type": "viewModel",
+                        "reference": "InteractionIndicator"
+                  }
+            }
+      },
+      "DistrictIndustrie": {
+            "type": "viewModel",
+            "properties": {
+                  "clicked": {
+                        "type": "trigger"
+                  },
+                  "industrieScene01": {
+                        "type": "viewModel",
+                        "reference": "InteractionIndicator"
+                  }
+            }
+      },
+      "DistrictVorstadt": {
+            "type": "viewModel",
+            "properties": {
+                  "clicked": {
+                        "type": "trigger"
+                  },
+                  "vorstadtScene01": {
+                        "type": "viewModel",
+                        "reference": "InteractionIndicator"
+                  },
+                  "vorstadtScene02": {
+                        "type": "viewModel",
+                        "reference": "InteractionIndicator"
+                  },
+                  "vorstadtScene03": {
+                        "type": "viewModel",
+                        "reference": "InteractionIndicator"
+                  }
+            }
+      },
+      "DistrictInnenstadt": {
+            "type": "viewModel",
+            "properties": {
+                  "clicked": {
+                        "type": "trigger"
+                  },
+                  "innenstadtScene01": {
+                        "type": "viewModel",
+                        "reference": "InteractionIndicator"
+                  },
+                  "innenstadtScene02": {
+                        "type": "viewModel",
+                        "reference": "InteractionIndicator"
+                  },
+                  "innenstadtScene03": {
+                        "type": "viewModel",
+                        "reference": "InteractionIndicator"
+                  }
+            }
+      },
+      "DistrictHochhausquartier": {
+            "type": "viewModel",
+            "properties": {
+                  "clicked": {
+                        "type": "trigger"
+                  },
+                  "hochhausquartierScene01": {
+                        "type": "viewModel",
+                        "reference": "InteractionIndicator"
+                  },
+                  "hochhausquartierScene02": {
+                        "type": "viewModel",
+                        "reference": "InteractionIndicator"
+                  },
+                  "hochhausquartierScene03": {
+                        "type": "viewModel",
+                        "reference": "InteractionIndicator"
+                  }
+            }
+      },
+      "DistrictFlughafen": {
+            "type": "viewModel",
+            "properties": {
+                  "clicked": {
+                        "type": "trigger"
+                  },
+                  "flughafenScene01": {
+                        "type": "viewModel",
+                        "reference": "InteractionIndicator"
+                  },
+                  "flughafenScene02": {
+                        "type": "viewModel",
+                        "reference": "InteractionIndicator"
+                  },
+                  "flughafenScene03": {
+                        "type": "viewModel",
+                        "reference": "InteractionIndicator"
+                  }
+            }
+      },
+      "DistrictFinanzdistrikt": {
+            "type": "viewModel",
+            "properties": {
+                  "clicked": {
+                        "type": "trigger"
+                  },
+                  "finanzdistrictScene01": {
+                        "type": "viewModel",
+                        "reference": "InteractionIndicator"
+                  },
+                  "finanzdistrictScene02": {
+                        "type": "viewModel",
+                        "reference": "InteractionIndicator"
+                  }
+            }
+      },
+      "DistrictEntwicklungsgebiet": {
+            "type": "viewModel",
+            "properties": {
+                  "clicked": {
+                        "type": "trigger"
+                  },
+                  "entwicklungsgebietScene01": {
+                        "type": "viewModel",
+                        "reference": "InteractionIndicator"
+                  },
+                  "entwicklungsgebietScene02": {
+                        "type": "viewModel",
+                        "reference": "InteractionIndicator"
+                  }
+            }
+      }
+}
