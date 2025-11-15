@@ -36,7 +36,7 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            min-width: 250px;
+            width: 200px;
         }
 
         .dev-panel h3 {
@@ -67,6 +67,22 @@
             background: #333;
             color: white;
         }
+
+        .dev-panel .section {
+            margin-bottom: 15px;
+        }
+
+        .dev-panel .section-title {
+            font-size: 12px;
+            color: #666;
+            margin: 10px 0 5px 0;
+            text-transform: uppercase;
+        }
+
+        .dev-panel button.small {
+            padding: 6px;
+            font-size: 12px;
+        }
     </style>
 </head>
 
@@ -75,9 +91,23 @@
 
     <div class="dev-panel">
         <h3>Toggle Districts</h3>
-        <button id="toggleDistrict01">Bahnhof</button>
-        <button id="toggleDistrict02">Stadtpark</button>
-        <button id="toggleDistrict03">Mysterium</button>
+        <div class="section">
+            <div class="section-title">District Containers</div>
+            <button id="toggleDistrict01" class="small">01</button>
+            <button id="toggleDistrict02" class="small">02</button>
+            <button id="toggleDistrict03" class="small">03</button>
+            <button id="toggleDistrict04" class="small">04</button>
+            <button id="toggleDistrict05" class="small">05</button>
+            <button id="toggleDistrict06" class="small">06</button>
+            <button id="toggleDistrict07" class="small">07</button>
+            <button id="toggleDistrict08" class="small">08</button>
+            <button id="toggleDistrict09" class="small">09</button>
+            <button id="toggleDistrict10" class="small">10</button>
+            <button id="toggleDistrict11" class="small">11</button>
+            <button id="toggleDistrict12" class="small">12</button>
+            <button id="toggleDistrict13" class="small">13</button>
+            <button id="toggleDistrict14" class="small">14</button>
+        </div>
         <p>Check console for triggers</p>
     </div>
 
@@ -155,27 +185,26 @@
                 console.log("=== Map View Model Properties ===");
                 console.log(mapVM.properties);
 
-                // Setup district containers
-                const districts = [
-                    { id: '01', name: 'Bahnhof', artboard: 'Bahnhof' },
-                    { id: '02', name: 'Stadtpark', artboard: 'Stadtpark' },
-                    { id: '03', name: 'Mysterium', artboard: 'Mysterium' }
-                ];
+                // Setup district containers (01-14)
+                const containerIds = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14'];
 
-                districts.forEach(district => {
-                    const artboardProp = mapVM.artboard(`districtContainers/districtContainer${district.id}/district`);
-                    const visibleProp = mapVM.boolean(`districtContainers/districtContainer${district.id}/visible`);
+                containerIds.forEach(id => {
+                    const visibleProp = mapVM.boolean(`districtContainers/districtContainer${id}/visible`);
 
-                    artboardProp.value = r.getArtboard(district.artboard);
-                    visibleProp.value = district.id === '01'; // Only first district visible by default
+                    // Artboard assignment is handled in Rive directly
+                    // The district property references are already set in the .riv file
 
-                    const btn = document.getElementById(`toggleDistrict${district.id}`);
-                    if (visibleProp.value) btn.classList.add('active');
+                    visibleProp.value = id === '01'; // Only first container visible by default
 
-                    btn.addEventListener('click', () => {
-                        visibleProp.value = !visibleProp.value;
-                        btn.classList.toggle('active', visibleProp.value);
-                    });
+                    const btn = document.getElementById(`toggleDistrict${id}`);
+                    if (btn) {
+                        if (visibleProp.value) btn.classList.add('active');
+
+                        btn.addEventListener('click', () => {
+                            visibleProp.value = !visibleProp.value;
+                            btn.classList.toggle('active', visibleProp.value);
+                        });
+                    }
                 });
 
                 // District click triggers
@@ -188,14 +217,295 @@
                 mapVM.trigger('districts/districtMysterium/clicked').on(() => {
                     console.log("District Mysterium clicked");
                 });
+                mapVM.trigger('districts/districtKVA/clicked').on(() => {
+                    console.log("District KVA clicked");
+                });
+                mapVM.trigger('districts/districtAgglomeration/clicked').on(() => {
+                    console.log("District Agglomeration clicked");
+                });
+                mapVM.trigger('districts/districtUmland/clicked').on(() => {
+                    console.log("District Umland clicked");
+                });
+                mapVM.trigger('districts/districtFluss/clicked').on(() => {
+                    console.log("District Fluss clicked");
+                });
+                mapVM.trigger('districts/districtIndustrie/clicked').on(() => {
+                    console.log("District Industrie clicked");
+                });
+                mapVM.trigger('districts/districtVorstadt/clicked').on(() => {
+                    console.log("District Vorstadt clicked");
+                });
+                mapVM.trigger('districts/districtInnenstadt/clicked').on(() => {
+                    console.log("District Innenstadt clicked");
+                });
+                mapVM.trigger('districts/districtHochhausquartier/clicked').on(() => {
+                    console.log("District Hochhausquartier clicked");
+                });
+                mapVM.trigger('districts/districtFlughafen/clicked').on(() => {
+                    console.log("District Flughafen clicked");
+                });
+                mapVM.trigger('districts/districtFinanzdistrikt/clicked').on(() => {
+                    console.log("District Finanzdistrikt clicked");
+                });
+                mapVM.trigger('districts/districtEntwicklungsgebiet/clicked').on(() => {
+                    console.log("District Entwicklungsgebiet clicked");
+                });
 
-                // Scene click triggers
-                mapVM.trigger('districts/districtBahnhof/sceneBhfPlatz/clicked').on(() => {
-                    console.log("Scene Bhf Platz clicked");
+                // Scene click triggers for DistrictBahnhof
+                mapVM.trigger('districts/districtBahnhof/bahnhofScene01/clicked').on(() => {
+                    console.log("Bahnhof Scene 01 clicked");
                 });
-                mapVM.trigger('districts/districtBahnhof/sceneCafe/clicked').on(() => {
-                    console.log("Scene Cafe clicked");
+                mapVM.trigger('districts/districtBahnhof/bahnhofScene02/clicked').on(() => {
+                    console.log("Bahnhof Scene 02 clicked");
                 });
+                mapVM.trigger('districts/districtBahnhof/bahnhofScene03/clicked').on(() => {
+                    console.log("Bahnhof Scene 03 clicked");
+                });
+                mapVM.trigger('districts/districtBahnhof/bahnhofScene04/clicked').on(() => {
+                    console.log("Bahnhof Scene 04 clicked");
+                });
+
+                // Scene click triggers for DistrictStadtpark
+                mapVM.trigger('districts/districtStadtpark/stadtparkScene01/clicked').on(() => {
+                    console.log("Stadtpark Scene 01 clicked");
+                });
+                mapVM.trigger('districts/districtStadtpark/stadtparkScene02/clicked').on(() => {
+                    console.log("Stadtpark Scene 02 clicked");
+                });
+                mapVM.trigger('districts/districtStadtpark/stadtparkScene03/clicked').on(() => {
+                    console.log("Stadtpark Scene 03 clicked");
+                });
+
+                // Scene click triggers for DistrictMysterium
+                mapVM.trigger('districts/districtMysterium/mysteriumScene01/clicked').on(() => {
+                    console.log("Mysterium Scene 01 clicked");
+                });
+                mapVM.trigger('districts/districtMysterium/mysteriumScene02/clicked').on(() => {
+                    console.log("Mysterium Scene 02 clicked");
+                });
+                mapVM.trigger('districts/districtMysterium/mysteriumScene03/clicked').on(() => {
+                    console.log("Mysterium Scene 03 clicked");
+                });
+
+                // Scene click triggers for DistrictKVA
+                mapVM.trigger('districts/districtKVA/kvaScene01/clicked').on(() => {
+                    console.log("KVA Scene 01 clicked");
+                });
+                mapVM.trigger('districts/districtKVA/kvaScene02/clicked').on(() => {
+                    console.log("KVA Scene 02 clicked");
+                });
+                mapVM.trigger('districts/districtKVA/kvaScene03/clicked').on(() => {
+                    console.log("KVA Scene 03 clicked");
+                });
+                mapVM.trigger('districts/districtKVA/kvaScene04/clicked').on(() => {
+                    console.log("KVA Scene 04 clicked");
+                });
+
+                // Scene click triggers for DistrictAgglomeration
+                mapVM.trigger('districts/districtAgglomeration/agglomerationScene01/clicked').on(() => {
+                    console.log("Agglomeration Scene 01 clicked");
+                });
+                mapVM.trigger('districts/districtAgglomeration/agglomerationScene02/clicked').on(() => {
+                    console.log("Agglomeration Scene 02 clicked");
+                });
+                mapVM.trigger('districts/districtAgglomeration/agglomerationScene03/clicked').on(() => {
+                    console.log("Agglomeration Scene 03 clicked");
+                });
+
+                // Scene click triggers for DistrictUmland
+                mapVM.trigger('districts/districtUmland/umlandScene01/clicked').on(() => {
+                    console.log("Umland Scene 01 clicked");
+                });
+                mapVM.trigger('districts/districtUmland/umlandScene02/clicked').on(() => {
+                    console.log("Umland Scene 02 clicked");
+                });
+                mapVM.trigger('districts/districtUmland/umlandScene03/clicked').on(() => {
+                    console.log("Umland Scene 03 clicked");
+                });
+
+                // Scene click triggers for DistrictFluss
+                mapVM.trigger('districts/districtFluss/flussScene01/clicked').on(() => {
+                    console.log("Fluss Scene 01 clicked");
+                });
+                mapVM.trigger('districts/districtFluss/flussScene02/clicked').on(() => {
+                    console.log("Fluss Scene 02 clicked");
+                });
+                mapVM.trigger('districts/districtFluss/flussScene03/clicked').on(() => {
+                    console.log("Fluss Scene 03 clicked");
+                });
+
+                // Scene click triggers for DistrictIndustrie
+                mapVM.trigger('districts/districtIndustrie/industrieScene01/clicked').on(() => {
+                    console.log("Industrie Scene 01 clicked");
+                });
+
+                // Scene click triggers for DistrictVorstadt
+                mapVM.trigger('districts/districtVorstadt/vorstadtScene01/clicked').on(() => {
+                    console.log("Vorstadt Scene 01 clicked");
+                });
+                mapVM.trigger('districts/districtVorstadt/vorstadtScene02/clicked').on(() => {
+                    console.log("Vorstadt Scene 02 clicked");
+                });
+                mapVM.trigger('districts/districtVorstadt/vorstadtScene03/clicked').on(() => {
+                    console.log("Vorstadt Scene 03 clicked");
+                });
+
+                // Scene click triggers for DistrictInnenstadt
+                mapVM.trigger('districts/districtInnenstadt/innenstadtScene01/clicked').on(() => {
+                    console.log("Innenstadt Scene 01 clicked");
+                });
+                mapVM.trigger('districts/districtInnenstadt/innenstadtScene02/clicked').on(() => {
+                    console.log("Innenstadt Scene 02 clicked");
+                });
+                mapVM.trigger('districts/districtInnenstadt/innenstadtScene03/clicked').on(() => {
+                    console.log("Innenstadt Scene 03 clicked");
+                });
+
+                // Scene click triggers for DistrictHochhausquartier
+                mapVM.trigger('districts/districtHochhausquartier/hochhausquartierScene01/clicked').on(() => {
+                    console.log("Hochhausquartier Scene 01 clicked");
+                });
+                mapVM.trigger('districts/districtHochhausquartier/hochhausquartierScene02/clicked').on(() => {
+                    console.log("Hochhausquartier Scene 02 clicked");
+                });
+                mapVM.trigger('districts/districtHochhausquartier/hochhausquartierScene03/clicked').on(() => {
+                    console.log("Hochhausquartier Scene 03 clicked");
+                });
+
+                // Scene click triggers for DistrictFlughafen
+                mapVM.trigger('districts/districtFlughafen/flughafenScene01/clicked').on(() => {
+                    console.log("Flughafen Scene 01 clicked");
+                });
+                mapVM.trigger('districts/districtFlughafen/flughafenScene02/clicked').on(() => {
+                    console.log("Flughafen Scene 02 clicked");
+                });
+                mapVM.trigger('districts/districtFlughafen/flughafenScene03/clicked').on(() => {
+                    console.log("Flughafen Scene 03 clicked");
+                });
+
+                // Scene click triggers for DistrictFinanzdistrikt
+                mapVM.trigger('districts/districtFinanzdistrikt/finanzdistrictScene01/clicked').on(() => {
+                    console.log("Finanzdistrikt Scene 01 clicked");
+                });
+                mapVM.trigger('districts/districtFinanzdistrikt/finanzdistrictScene02/clicked').on(() => {
+                    console.log("Finanzdistrikt Scene 02 clicked");
+                });
+
+                // Scene click triggers for DistrictEntwicklungsgebiet
+                mapVM.trigger('districts/districtEntwicklungsgebiet/entwicklungsgebietScene01/clicked').on(() => {
+                    console.log("Entwicklungsgebiet Scene 01 clicked");
+                });
+                mapVM.trigger('districts/districtEntwicklungsgebiet/entwicklungsgebietScene02/clicked').on(() => {
+                    console.log("Entwicklungsgebiet Scene 02 clicked");
+                });
+
+                // Scene hovered properties for DistrictBahnhof
+                const bahnhofScene01Hovered = mapVM.boolean('districts/districtBahnhof/bahnhofScene01/hovered');
+                const bahnhofScene02Hovered = mapVM.boolean('districts/districtBahnhof/bahnhofScene02/hovered');
+                const bahnhofScene03Hovered = mapVM.boolean('districts/districtBahnhof/bahnhofScene03/hovered');
+                const bahnhofScene04Hovered = mapVM.boolean('districts/districtBahnhof/bahnhofScene04/hovered');
+                console.log("Bahnhof Scene 01 hovered:", bahnhofScene01Hovered.value);
+                console.log("Bahnhof Scene 02 hovered:", bahnhofScene02Hovered.value);
+                console.log("Bahnhof Scene 03 hovered:", bahnhofScene03Hovered.value);
+                console.log("Bahnhof Scene 04 hovered:", bahnhofScene04Hovered.value);
+
+                // Scene hovered properties for DistrictStadtpark
+                const stadtparkScene01Hovered = mapVM.boolean('districts/districtStadtpark/stadtparkScene01/hovered');
+                const stadtparkScene02Hovered = mapVM.boolean('districts/districtStadtpark/stadtparkScene02/hovered');
+                const stadtparkScene03Hovered = mapVM.boolean('districts/districtStadtpark/stadtparkScene03/hovered');
+                console.log("Stadtpark Scene 01 hovered:", stadtparkScene01Hovered.value);
+                console.log("Stadtpark Scene 02 hovered:", stadtparkScene02Hovered.value);
+                console.log("Stadtpark Scene 03 hovered:", stadtparkScene03Hovered.value);
+
+                // Scene hovered properties for DistrictMysterium
+                const mysteriumScene01Hovered = mapVM.boolean('districts/districtMysterium/mysteriumScene01/hovered');
+                const mysteriumScene02Hovered = mapVM.boolean('districts/districtMysterium/mysteriumScene02/hovered');
+                const mysteriumScene03Hovered = mapVM.boolean('districts/districtMysterium/mysteriumScene03/hovered');
+                console.log("Mysterium Scene 01 hovered:", mysteriumScene01Hovered.value);
+                console.log("Mysterium Scene 02 hovered:", mysteriumScene02Hovered.value);
+                console.log("Mysterium Scene 03 hovered:", mysteriumScene03Hovered.value);
+
+                // Scene hovered properties for DistrictKVA
+                const kvaScene01Hovered = mapVM.boolean('districts/districtKVA/kvaScene01/hovered');
+                const kvaScene02Hovered = mapVM.boolean('districts/districtKVA/kvaScene02/hovered');
+                const kvaScene03Hovered = mapVM.boolean('districts/districtKVA/kvaScene03/hovered');
+                const kvaScene04Hovered = mapVM.boolean('districts/districtKVA/kvaScene04/hovered');
+                console.log("KVA Scene 01 hovered:", kvaScene01Hovered.value);
+                console.log("KVA Scene 02 hovered:", kvaScene02Hovered.value);
+                console.log("KVA Scene 03 hovered:", kvaScene03Hovered.value);
+                console.log("KVA Scene 04 hovered:", kvaScene04Hovered.value);
+
+                // Scene hovered properties for DistrictAgglomeration
+                const aggloScene01Hovered = mapVM.boolean('districts/districtAgglomeration/agglomerationScene01/hovered');
+                const aggloScene02Hovered = mapVM.boolean('districts/districtAgglomeration/agglomerationScene02/hovered');
+                const aggloScene03Hovered = mapVM.boolean('districts/districtAgglomeration/agglomerationScene03/hovered');
+                console.log("Agglomeration Scene 01 hovered:", aggloScene01Hovered.value);
+                console.log("Agglomeration Scene 02 hovered:", aggloScene02Hovered.value);
+                console.log("Agglomeration Scene 03 hovered:", aggloScene03Hovered.value);
+
+                // Scene hovered properties for DistrictUmland
+                const umlandScene01Hovered = mapVM.boolean('districts/districtUmland/umlandScene01/hovered');
+                const umlandScene02Hovered = mapVM.boolean('districts/districtUmland/umlandScene02/hovered');
+                const umlandScene03Hovered = mapVM.boolean('districts/districtUmland/umlandScene03/hovered');
+                console.log("Umland Scene 01 hovered:", umlandScene01Hovered.value);
+                console.log("Umland Scene 02 hovered:", umlandScene02Hovered.value);
+                console.log("Umland Scene 03 hovered:", umlandScene03Hovered.value);
+
+                // Scene hovered properties for DistrictFluss
+                const flussScene01Hovered = mapVM.boolean('districts/districtFluss/flussScene01/hovered');
+                const flussScene02Hovered = mapVM.boolean('districts/districtFluss/flussScene02/hovered');
+                const flussScene03Hovered = mapVM.boolean('districts/districtFluss/flussScene03/hovered');
+                console.log("Fluss Scene 01 hovered:", flussScene01Hovered.value);
+                console.log("Fluss Scene 02 hovered:", flussScene02Hovered.value);
+                console.log("Fluss Scene 03 hovered:", flussScene03Hovered.value);
+
+                // Scene hovered properties for DistrictIndustrie
+                const industrieScene01Hovered = mapVM.boolean('districts/districtIndustrie/industrieScene01/hovered');
+                console.log("Industrie Scene 01 hovered:", industrieScene01Hovered.value);
+
+                // Scene hovered properties for DistrictVorstadt
+                const vorstadtScene01Hovered = mapVM.boolean('districts/districtVorstadt/vorstadtScene01/hovered');
+                const vorstadtScene02Hovered = mapVM.boolean('districts/districtVorstadt/vorstadtScene02/hovered');
+                const vorstadtScene03Hovered = mapVM.boolean('districts/districtVorstadt/vorstadtScene03/hovered');
+                console.log("Vorstadt Scene 01 hovered:", vorstadtScene01Hovered.value);
+                console.log("Vorstadt Scene 02 hovered:", vorstadtScene02Hovered.value);
+                console.log("Vorstadt Scene 03 hovered:", vorstadtScene03Hovered.value);
+
+                // Scene hovered properties for DistrictInnenstadt
+                const innenstadtScene01Hovered = mapVM.boolean('districts/districtInnenstadt/innenstadtScene01/hovered');
+                const innenstadtScene02Hovered = mapVM.boolean('districts/districtInnenstadt/innenstadtScene02/hovered');
+                const innenstadtScene03Hovered = mapVM.boolean('districts/districtInnenstadt/innenstadtScene03/hovered');
+                console.log("Innenstadt Scene 01 hovered:", innenstadtScene01Hovered.value);
+                console.log("Innenstadt Scene 02 hovered:", innenstadtScene02Hovered.value);
+                console.log("Innenstadt Scene 03 hovered:", innenstadtScene03Hovered.value);
+
+                // Scene hovered properties for DistrictHochhausquartier
+                const hochhausquartierScene01Hovered = mapVM.boolean('districts/districtHochhausquartier/hochhausquartierScene01/hovered');
+                const hochhausquartierScene02Hovered = mapVM.boolean('districts/districtHochhausquartier/hochhausquartierScene02/hovered');
+                const hochhausquartierScene03Hovered = mapVM.boolean('districts/districtHochhausquartier/hochhausquartierScene03/hovered');
+                console.log("Hochhausquartier Scene 01 hovered:", hochhausquartierScene01Hovered.value);
+                console.log("Hochhausquartier Scene 02 hovered:", hochhausquartierScene02Hovered.value);
+                console.log("Hochhausquartier Scene 03 hovered:", hochhausquartierScene03Hovered.value);
+
+                // Scene hovered properties for DistrictFlughafen
+                const flughafenScene01Hovered = mapVM.boolean('districts/districtFlughafen/flughafenScene01/hovered');
+                const flughafenScene02Hovered = mapVM.boolean('districts/districtFlughafen/flughafenScene02/hovered');
+                const flughafenScene03Hovered = mapVM.boolean('districts/districtFlughafen/flughafenScene03/hovered');
+                console.log("Flughafen Scene 01 hovered:", flughafenScene01Hovered.value);
+                console.log("Flughafen Scene 02 hovered:", flughafenScene02Hovered.value);
+                console.log("Flughafen Scene 03 hovered:", flughafenScene03Hovered.value);
+
+                // Scene hovered properties for DistrictFinanzdistrikt
+                const finanzdistrictScene01Hovered = mapVM.boolean('districts/districtFinanzdistrikt/finanzdistrictScene01/hovered');
+                const finanzdistrictScene02Hovered = mapVM.boolean('districts/districtFinanzdistrikt/finanzdistrictScene02/hovered');
+                console.log("Finanzdistrikt Scene 01 hovered:", finanzdistrictScene01Hovered.value);
+                console.log("Finanzdistrikt Scene 02 hovered:", finanzdistrictScene02Hovered.value);
+
+                // Scene hovered properties for DistrictEntwicklungsgebiet
+                const entwicklungsgebietScene01Hovered = mapVM.boolean('districts/districtEntwicklungsgebiet/entwicklungsgebietScene01/hovered');
+                const entwicklungsgebietScene02Hovered = mapVM.boolean('districts/districtEntwicklungsgebiet/entwicklungsgebietScene02/hovered');
+                console.log("Entwicklungsgebiet Scene 01 hovered:", entwicklungsgebietScene01Hovered.value);
+                console.log("Entwicklungsgebiet Scene 02 hovered:", entwicklungsgebietScene02Hovered.value);
             },
         });
     </script>
