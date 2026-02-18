@@ -32,11 +32,13 @@
             position: fixed;
             top: 20px;
             right: 20px;
+            bottom: 20px;
             background: white;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             width: 200px;
+            overflow-y: auto;
         }
 
         .dev-panel h3 {
@@ -107,6 +109,24 @@
             <button id="toggleDistrict12" class="small">12</button>
             <button id="toggleDistrict13" class="small">13</button>
             <button id="toggleDistrict14" class="small">14</button>
+        </div>
+        <div class="section">
+            <div class="section-title">City Guide</div>
+            <button id="toggleCityGuide">Show City Guide</button>
+            <button id="cgdBahnhof" class="small">Bahnhof</button>
+            <button id="cgdStadtpark" class="small">Stadtpark</button>
+            <button id="cgdMysterium" class="small">Mysterium</button>
+            <button id="cgdKva" class="small">KVA</button>
+            <button id="cgdAgglomeration" class="small">Agglomeration</button>
+            <button id="cgdUmland" class="small">Umland</button>
+            <button id="cgdFluss" class="small">Fluss</button>
+            <button id="cgdIndustrie" class="small">Industrie</button>
+            <button id="cgdVorstadt" class="small">Vorstadt</button>
+            <button id="cgdInnenstadt" class="small">Innenstadt</button>
+            <button id="cgdHochhausquartier" class="small">Hochhausquartier</button>
+            <button id="cgdFlughafen" class="small">Flughafen</button>
+            <button id="cgdFinanzdistrikt" class="small">Finanzdistrikt</button>
+            <button id="cgdEntwicklungsgebiet" class="small">Entwicklungsgebiet</button>
         </div>
         <p>Check console for triggers</p>
     </div>
@@ -180,6 +200,17 @@
 
                 // Setup map
                 const mapVM = mainVMI.viewModel("map");
+
+                // Show City Guide toggle
+                const showCityGuide = mapVM.boolean('showCityGuide');
+                console.log("Show City Guide:", showCityGuide.value);
+
+                const cityGuideBtn = document.getElementById('toggleCityGuide');
+                if (showCityGuide.value) cityGuideBtn.classList.add('active');
+                cityGuideBtn.addEventListener('click', () => {
+                    showCityGuide.value = !showCityGuide.value;
+                    cityGuideBtn.classList.toggle('active', showCityGuide.value);
+                });
 
                 // Log all properties to discover structure
                 console.log("=== Map View Model Properties ===");
@@ -483,6 +514,50 @@
                     console.log("Entwicklungsgebiet Contact 02 clicked");
                 });
 
+                // CityGuide district click triggers
+                mapVM.trigger('cityGuide/cgdBahnhof/clicked').on(() => {
+                    console.log("CityGuide Bahnhof clicked");
+                });
+                mapVM.trigger('cityGuide/cgdStadtpark/clicked').on(() => {
+                    console.log("CityGuide Stadtpark clicked");
+                });
+                mapVM.trigger('cityGuide/cgdMysterium/clicked').on(() => {
+                    console.log("CityGuide Mysterium clicked");
+                });
+                mapVM.trigger('cityGuide/cgdKva/clicked').on(() => {
+                    console.log("CityGuide KVA clicked");
+                });
+                mapVM.trigger('cityGuide/cgdAgglomeration/clicked').on(() => {
+                    console.log("CityGuide Agglomeration clicked");
+                });
+                mapVM.trigger('cityGuide/cgdUmland/clicked').on(() => {
+                    console.log("CityGuide Umland clicked");
+                });
+                mapVM.trigger('cityGuide/cgdFluss/clicked').on(() => {
+                    console.log("CityGuide Fluss clicked");
+                });
+                mapVM.trigger('cityGuide/cgdIndustrie/clicked').on(() => {
+                    console.log("CityGuide Industrie clicked");
+                });
+                mapVM.trigger('cityGuide/cgdVorstadt/clicked').on(() => {
+                    console.log("CityGuide Vorstadt clicked");
+                });
+                mapVM.trigger('cityGuide/cgdInnenstadt/clicked').on(() => {
+                    console.log("CityGuide Innenstadt clicked");
+                });
+                mapVM.trigger('cityGuide/cgdHochhausquartier/clicked').on(() => {
+                    console.log("CityGuide Hochhausquartier clicked");
+                });
+                mapVM.trigger('cityGuide/cgdFlughafen/clicked').on(() => {
+                    console.log("CityGuide Flughafen clicked");
+                });
+                mapVM.trigger('cityGuide/cgdFinanzdistrikt/clicked').on(() => {
+                    console.log("CityGuide Finanzdistrikt clicked");
+                });
+                mapVM.trigger('cityGuide/cgdEntwicklungsgebiet/clicked').on(() => {
+                    console.log("CityGuide Entwicklungsgebiet clicked");
+                });
+
                 // Scene hovered properties for DistrictBahnhof
                 const bahnhofScene01Hovered = mapVM.boolean('districts/districtBahnhof/bahnhofScene01/hovered');
                 const bahnhofScene02Hovered = mapVM.boolean('districts/districtBahnhof/bahnhofScene02/hovered');
@@ -646,6 +721,38 @@
                 console.log("Entwicklungsgebiet Scene 02 hovered:", entwicklungsgebietScene02Hovered.value);
                 console.log("Entwicklungsgebiet Contact 01 hovered:", entwicklungsgebietContact01Hovered.value);
                 console.log("Entwicklungsgebiet Contact 02 hovered:", entwicklungsgebietContact02Hovered.value);
+
+                // CityGuide district highlighted properties + toggle buttons
+                const cgdDistricts = [
+                    { id: 'cgdBahnhof', path: 'cityGuide/cgdBahnhof/highlighted' },
+                    { id: 'cgdStadtpark', path: 'cityGuide/cgdStadtpark/highlighted' },
+                    { id: 'cgdMysterium', path: 'cityGuide/cgdMysterium/highlighted' },
+                    { id: 'cgdKva', path: 'cityGuide/cgdKva/highlighted' },
+                    { id: 'cgdAgglomeration', path: 'cityGuide/cgdAgglomeration/highlighted' },
+                    { id: 'cgdUmland', path: 'cityGuide/cgdUmland/highlighted' },
+                    { id: 'cgdFluss', path: 'cityGuide/cgdFluss/highlighted' },
+                    { id: 'cgdIndustrie', path: 'cityGuide/cgdIndustrie/highlighted' },
+                    { id: 'cgdVorstadt', path: 'cityGuide/cgdVorstadt/highlighted' },
+                    { id: 'cgdInnenstadt', path: 'cityGuide/cgdInnenstadt/highlighted' },
+                    { id: 'cgdHochhausquartier', path: 'cityGuide/cgdHochhausquartier/highlighted' },
+                    { id: 'cgdFlughafen', path: 'cityGuide/cgdFlughafen/highlighted' },
+                    { id: 'cgdFinanzdistrikt', path: 'cityGuide/cgdFinanzdistrikt/highlighted' },
+                    { id: 'cgdEntwicklungsgebiet', path: 'cityGuide/cgdEntwicklungsgebiet/highlighted' },
+                ];
+
+                cgdDistricts.forEach(({ id, path }) => {
+                    const highlightedProp = mapVM.boolean(path);
+                    console.log(`${id} highlighted:`, highlightedProp.value);
+
+                    const btn = document.getElementById(id);
+                    if (btn) {
+                        if (highlightedProp.value) btn.classList.add('active');
+                        btn.addEventListener('click', () => {
+                            highlightedProp.value = !highlightedProp.value;
+                            btn.classList.toggle('active', highlightedProp.value);
+                        });
+                    }
+                });
             },
         });
     </script>
