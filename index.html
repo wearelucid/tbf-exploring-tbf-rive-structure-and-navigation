@@ -221,6 +221,9 @@
 
                 containerIds.forEach(id => {
                     const visibleProp = mapVM.boolean(`districtContainers/districtContainer${id}/visible`);
+                    const posX = mapVM.number(`districtContainers/districtContainer${id}/posX`);
+                    const posY = mapVM.number(`districtContainers/districtContainer${id}/poxY`);
+                    console.log(`District Container ${id} posX:`, posX.value, `poxY:`, posY.value);
 
                     // Artboard assignment is handled in Rive directly
                     // The district property references are already set in the .riv file
