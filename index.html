@@ -109,6 +109,7 @@
             <button id="toggleDistrict12" class="small">12</button>
             <button id="toggleDistrict13" class="small">13</button>
             <button id="toggleDistrict14" class="small">14</button>
+            <button id="toggleDistrict15" class="small">15</button>
         </div>
         <div class="section">
             <div class="section-title">City Guide</div>
@@ -127,6 +128,7 @@
             <button id="cgdFlughafen" class="small">Flughafen</button>
             <button id="cgdFinanzdistrikt" class="small">Finanzdistrikt</button>
             <button id="cgdEntwicklungsgebiet" class="small">Entwicklungsgebiet</button>
+            <button id="cgdRathausquartier" class="small">Rathausquartier</button>
         </div>
         <p>Check console for triggers</p>
     </div>
@@ -217,7 +219,7 @@
                 console.log(mapVM.properties);
 
                 // Setup district containers (01-14)
-                const containerIds = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14'];
+                const containerIds = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15'];
 
                 containerIds.forEach(id => {
                     const visibleProp = mapVM.boolean(`districtContainers/districtContainer${id}/visible`);
@@ -283,6 +285,9 @@
                 });
                 mapVM.trigger('districts/districtEntwicklungsgebiet/clicked').on(() => {
                     console.log("District Entwicklungsgebiet clicked");
+                });
+                mapVM.trigger('districts/districtRathausquartier/clicked').on(() => {
+                    console.log("District Rathausquartier clicked");
                 });
 
                 // Scene click triggers for DistrictBahnhof
@@ -517,6 +522,20 @@
                     console.log("Entwicklungsgebiet Contact 02 clicked");
                 });
 
+                // Scene click triggers for DistrictRathausquartier
+                mapVM.trigger('districts/districtRathausquartier/rathausquartierScene01/clicked').on(() => {
+                    console.log("Rathausquartier Scene 01 clicked");
+                });
+                mapVM.trigger('districts/districtRathausquartier/rathausquartierScene02/clicked').on(() => {
+                    console.log("Rathausquartier Scene 02 clicked");
+                });
+                mapVM.trigger('districts/districtRathausquartier/rathausquartierContact01/clicked').on(() => {
+                    console.log("Rathausquartier Contact 01 clicked");
+                });
+                mapVM.trigger('districts/districtRathausquartier/rathausquartierContact02/clicked').on(() => {
+                    console.log("Rathausquartier Contact 02 clicked");
+                });
+
                 // CityGuide district click triggers
                 mapVM.trigger('cityGuide/cgdBahnhof/clicked').on(() => {
                     console.log("CityGuide Bahnhof clicked");
@@ -559,6 +578,9 @@
                 });
                 mapVM.trigger('cityGuide/cgdEntwicklungsgebiet/clicked').on(() => {
                     console.log("CityGuide Entwicklungsgebiet clicked");
+                });
+                mapVM.trigger('cityGuide/cgdRathausquartier/clicked').on(() => {
+                    console.log("CityGuide Rathausquartier clicked");
                 });
 
                 // Scene hovered properties for DistrictBahnhof
@@ -725,6 +747,16 @@
                 console.log("Entwicklungsgebiet Contact 01 hovered:", entwicklungsgebietContact01Hovered.value);
                 console.log("Entwicklungsgebiet Contact 02 hovered:", entwicklungsgebietContact02Hovered.value);
 
+                // Scene hovered properties for DistrictRathausquartier
+                const rathausquartierScene01Hovered = mapVM.boolean('districts/districtRathausquartier/rathausquartierScene01/hovered');
+                const rathausquartierScene02Hovered = mapVM.boolean('districts/districtRathausquartier/rathausquartierScene02/hovered');
+                const rathausquartierContact01Hovered = mapVM.boolean('districts/districtRathausquartier/rathausquartierContact01/hovered');
+                const rathausquartierContact02Hovered = mapVM.boolean('districts/districtRathausquartier/rathausquartierContact02/hovered');
+                console.log("Rathausquartier Scene 01 hovered:", rathausquartierScene01Hovered.value);
+                console.log("Rathausquartier Scene 02 hovered:", rathausquartierScene02Hovered.value);
+                console.log("Rathausquartier Contact 01 hovered:", rathausquartierContact01Hovered.value);
+                console.log("Rathausquartier Contact 02 hovered:", rathausquartierContact02Hovered.value);
+
                 // CityGuide district highlighted properties + toggle buttons
                 const cgdDistricts = [
                     { id: 'cgdBahnhof', path: 'cityGuide/cgdBahnhof/highlighted' },
@@ -741,6 +773,7 @@
                     { id: 'cgdFlughafen', path: 'cityGuide/cgdFlughafen/highlighted' },
                     { id: 'cgdFinanzdistrikt', path: 'cityGuide/cgdFinanzdistrikt/highlighted' },
                     { id: 'cgdEntwicklungsgebiet', path: 'cityGuide/cgdEntwicklungsgebiet/highlighted' },
+                    { id: 'cgdRathausquartier', path: 'cityGuide/cgdRathausquartier/highlighted' },
                 ];
 
                 cgdDistricts.forEach(({ id, path }) => {
