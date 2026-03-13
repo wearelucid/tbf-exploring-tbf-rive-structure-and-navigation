@@ -112,6 +112,24 @@
             <button id="toggleDistrict15" class="small">15</button>
         </div>
         <div class="section">
+            <div class="section-title">District Active</div>
+            <button id="activeDistrict01" class="small">01</button>
+            <button id="activeDistrict02" class="small">02</button>
+            <button id="activeDistrict03" class="small">03</button>
+            <button id="activeDistrict04" class="small">04</button>
+            <button id="activeDistrict05" class="small">05</button>
+            <button id="activeDistrict06" class="small">06</button>
+            <button id="activeDistrict07" class="small">07</button>
+            <button id="activeDistrict08" class="small">08</button>
+            <button id="activeDistrict09" class="small">09</button>
+            <button id="activeDistrict10" class="small">10</button>
+            <button id="activeDistrict11" class="small">11</button>
+            <button id="activeDistrict12" class="small">12</button>
+            <button id="activeDistrict13" class="small">13</button>
+            <button id="activeDistrict14" class="small">14</button>
+            <button id="activeDistrict15" class="small">15</button>
+        </div>
+        <div class="section">
             <div class="section-title">City Guide</div>
             <button id="toggleCityGuide">Show City Guide</button>
             <button id="cgdBahnhof" class="small">Bahnhof</button>
@@ -239,6 +257,41 @@
                         btn.addEventListener('click', () => {
                             visibleProp.value = !visibleProp.value;
                             btn.classList.toggle('active', visibleProp.value);
+                        });
+                    }
+                });
+
+                // District active toggles
+                const containerToDistrict = {
+                    '01': 'districtAgglomeration',
+                    '02': 'districtKVA',
+                    '03': 'districtUmland',
+                    '04': 'districtFluss',
+                    '05': 'districtIndustrie',
+                    '06': 'districtVorstadt',
+                    '07': 'districtStadtpark',
+                    '08': 'districtInnenstadt',
+                    '09': 'districtMysterium',
+                    '10': 'districtBahnhof',
+                    '11': 'districtEntwicklungsgebiet',
+                    '12': 'districtFinanzdistrikt',
+                    '13': 'districtHochhausquartier',
+                    '14': 'districtFlughafen',
+                    '15': 'districtRathausquartier',
+                };
+
+                containerIds.forEach(id => {
+                    const districtRef = containerToDistrict[id];
+                    if (!districtRef) return;
+                    const activeProp = mapVM.boolean(`districts/${districtRef}/active`);
+                    console.log(`District ${id} (${districtRef}) active:`, activeProp.value);
+
+                    const btn = document.getElementById(`activeDistrict${id}`);
+                    if (btn) {
+                        if (activeProp.value) btn.classList.add('active');
+                        btn.addEventListener('click', () => {
+                            activeProp.value = !activeProp.value;
+                            btn.classList.toggle('active', activeProp.value);
                         });
                     }
                 });
